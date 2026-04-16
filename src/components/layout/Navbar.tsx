@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { UtensilsCrossed } from "lucide-react";
+import { NavbarAuth } from "./NavbarAuth";
 
 export function Navbar() {
   return (
@@ -31,21 +32,8 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* CTAs */}
-        <div className="flex items-center gap-5">
-          <Link
-            href="/login"
-            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground md:block"
-          >
-            Iniciar sesión
-          </Link>
-          <Link
-            href="/signup"
-            className="rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-85 active:scale-[0.98]"
-          >
-            Empezar gratis
-          </Link>
-        </div>
+        {/* CTAs / User menu */}
+        <NavbarAuth />
       </div>
     </header>
   );
