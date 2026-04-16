@@ -1,0 +1,150 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+/* ── TopVent Landing Palette ───────────────────────────────────────────────────
+   Primary   #30364F — navy (maître d's jacket)
+   Secondary #ACBAC4 — blue-gray (uniform trim)
+   Accent    #E1D9BC — warm beige (menu card)
+   Base      #F0F0DB — cream (dining linen)
+──────────────────────────────────────────────────────────────────────────── */
+:root {
+  --background: oklch(0.975 0.010 102);
+  --foreground: oklch(0.270 0.055 258);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.270 0.055 258);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.270 0.055 258);
+
+  --primary: oklch(0.270 0.055 258);
+  --primary-foreground: oklch(0.975 0.010 102);
+
+  --secondary: oklch(0.740 0.026 220);
+  --secondary-foreground: oklch(0.270 0.055 258);
+
+  --muted: oklch(0.940 0.028 102);
+  --muted-foreground: oklch(0.500 0.030 240);
+
+  --accent: oklch(0.870 0.043 88);
+  --accent-foreground: oklch(0.270 0.055 258);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.900 0.015 100);
+  --input: oklch(0.960 0.012 100);
+  --ring: oklch(0.270 0.055 258);
+
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: oklch(0.180 0.045 258);
+  --foreground: oklch(0.940 0.020 100);
+  --card: oklch(0.220 0.050 258);
+  --card-foreground: oklch(0.940 0.020 100);
+  --popover: oklch(0.220 0.050 258);
+  --popover-foreground: oklch(0.940 0.020 100);
+  --primary: oklch(0.870 0.043 88);
+  --primary-foreground: oklch(0.270 0.055 258);
+  --secondary: oklch(0.330 0.052 258);
+  --secondary-foreground: oklch(0.940 0.020 100);
+  --muted: oklch(0.280 0.045 258);
+  --muted-foreground: oklch(0.680 0.025 220);
+  --accent: oklch(0.350 0.040 258);
+  --accent-foreground: oklch(0.940 0.020 100);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.740 0.026 220);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Entry animations ──────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.delay-75  { animation-delay:  75ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ── Grain overlay — fixed, pointer-events-none, GPU-safe ──────────────────── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
