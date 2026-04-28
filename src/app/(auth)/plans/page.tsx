@@ -39,7 +39,7 @@ function daysLeft(iso: string | null): number | null {
 
 declare global {
   interface Window {
-    Culqi: {
+    Culqi?: {
       publicKey: string;
       settings: (opts: {
         title: string;
@@ -171,19 +171,30 @@ export default function PlansPage() {
       return;
     }
 
+    if (!window.Culqi) {
+      setError("El sistema de pago aún no cargó. Espera un momento e intenta de nuevo.");
+      return;
+    }
+
     setError(null);
     setPaying(planId);
     pendingRef.current = { planId, billing, amount };
 
-    const publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY ?? "";
-    window.Culqi.publicKey = publicKey;
-    window.Culqi.settings({
-      title: "TopVent",
-      currency: "PEN",
-      description: `Plan ${planName} - ${billing === "annual" ? "Anual" : "Mensual"}`,
-      amount,
-    });
-    window.Culqi.open();
+    try {
+      const publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY ?? "";
+      window.Culqi.publicKey = publicKey;
+      window.Culqi.settings({
+        title: "TopVent",
+        currency: "PEN",
+        description: `Plan ${planName} - ${billing === "annual" ? "Anual" : "Mensual"}`,
+        amount,
+      });
+      window.Culqi.open();
+    } catch {
+      pendingRef.current = null;
+      setPaying(null);
+      setError("No se pudo abrir el formulario de pago. Intenta de nuevo.");
+    }
   }
 
   const currentPlan = restaurantPlan?.plan ?? null;
