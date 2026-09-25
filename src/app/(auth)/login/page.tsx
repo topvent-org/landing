@@ -7,8 +7,11 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/v1";
 
+console.log("API_URL:", API_URL);
+
 const DASHBOARD_URL =
   process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3000";
+console.log("DASHBOARD_URL:", DASHBOARD_URL);
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
